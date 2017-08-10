@@ -1,36 +1,50 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import reactDOM from 'react-dom';
+import * as rb from 'react-bootstrap';
 import $ from 'jquery';
-import List from './components/List.jsx';
+import MovieList from './components/MovieList.jsx';
+import MovieListItem from './components/MovieListItem.jsx';
+import Search from './components/Search.jsx';
+import AddMovie from './components/AddMovie.jsx';
+import MovieData from '../../fakeData.js';
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { 
-      items: []
+    super(props)
+    
+    this.state = {
+      movies: []
     }
   }
-
-  componentDidMount() {
-    $.ajax({
-      url: '/items', 
-      success: (data) => {
-        this.setState({
-          items: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
+  
+  onSearch(movie) {
+    var movieArr = [];
+    for (var i = 0; i < MovieData.length; i++) {
+      if (MovieData[i].title === movie) {
+        movieArr.push(MovieData[i]);
+        break; //break out if condition is met
+        
+      } else {
+        movieArr = ['Oops! We do not have this movie!'];
       }
-    });
+    }
+    
+    this.setState({
+      movies: movieArr
+    })
   }
-
-  render () {
-    return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
-    </div>)
+  
+  render() {
+    return (
+      <div>
+        <rb.PageHeader>Welcome to MovieList</rb.PageHeader>
+        <AddMovie></AddMovie>
+        <Search onSearch={this.onSearch.bind(this)}></Search>
+        <MovieList movies={this.state.movies}>
+        </MovieList>
+      </div>
+    )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+reactDOM.render(<App />, document.getElementById("app"));
