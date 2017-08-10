@@ -19,14 +19,15 @@ class App extends React.Component {
   
   onSearch(movie) {
     var movieArr = [];
+
     for (var i = 0; i < MovieData.length; i++) {
-      if (MovieData[i].title === movie) {
+      if (MovieData[i].title.includes(movie)) {
         movieArr.push(MovieData[i]);
-        break; //break out if condition is met
-        
-      } else {
-        movieArr = ['Oops! We do not have this movie!'];
       }
+    }
+
+    if (movieArr.length === 0) { //if no matches were found
+      movieArr = ['Oops! We do not have this movie!']; 
     }
     
     this.setState({

@@ -24,15 +24,17 @@ class AddMovie extends React.Component {
   }
   
   onAdd() {
+    var movieAddedAlready = false;
     for (var i = 0; i < MovieData.length; i++) {
       if (MovieData[i].title === this.state.movieToAdd) {
-        MovieData[i].title === this.state.movieToAdd;
-      } else {
-        MovieData.push({title: this.state.movieToAdd});
-        break;
+        movieAddedAlready = true;
       }
     }
-    console.log(MovieData);
+    
+    if (!movieAddedAlready) {
+      MovieData.push({title: this.state.movieToAdd});
+    }
+    
   }
   
   render() {
