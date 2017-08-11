@@ -18,21 +18,41 @@ class App extends React.Component {
   }
   
   onSearch(movie) {
-    var movieArr = [];
-
-    for (var i = 0; i < MovieData.length; i++) {
-      if (MovieData[i].title.includes(movie)) {
-        movieArr.push(MovieData[i]);
+    var context = this;
+    $.ajax({
+      url: "/search",
+      type: "POST",
+      data: {title: movie},
+      // dataType: "json",
+      success: function(data) {
+        
+        if (!Array.isArray(data)) {
+          data = [data];
+        }
+        
+        context.setState({
+          movies: context.state.movies.concat(data)
+        })
+      },
+      error: function() {
+        console.log('Error on Search');
       }
-    }
-
-    if (movieArr.length === 0) { //if no matches were found
-      movieArr = ['Oops! We do not have this movie!']; 
-    }
-    
-    this.setState({
-      movies: movieArr
     })
+    // var movieArr = [];
+
+    // for (var i = 0; i < MovieData.length; i++) {
+    //   if (MovieData[i].title.includes(movie)) {
+    //     movieArr.push(MovieData[i]);
+    //   }
+    // }
+
+    // if (movieArr.length === 0) { //if no matches were found
+    //   movieArr = ['Oops! We do not have this movie!']; 
+    // }
+    
+    // this.setState({
+    //   movies: movieArr
+    // })
   }
   
   render() {

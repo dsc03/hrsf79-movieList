@@ -18,8 +18,8 @@ class MovieList extends React.Component {
     return (
       <div>
         <rb.ListGroup>
-          {typeof this.props.movies[0] === 'string' ? <MovieListItem movie={this.props.movies[0]}></MovieListItem> : this.props.movies.map((movie) => 
-            <MovieListItem key={counter++} movie={movie.title}></MovieListItem>  
+          {typeof this.props.movies === 'string' ? <MovieListItem movie={this.props.movies[0]}></MovieListItem> : this.props.movies.map((movie) => 
+            <MovieListItem key={counter++} movie={movie.show_title}></MovieListItem>  
           )}
         </rb.ListGroup>
       </div>
